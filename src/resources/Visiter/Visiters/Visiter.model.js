@@ -5,12 +5,11 @@ class Visiter {
     this.id = id;
     this.Name = Name;
     this.Age = Age;
-    this.TicketID = TicketID
   }
 
   static toResponse(visiter) {
-    const { id, Name, Age, TicketID } = visiter;
-    return { id, Name, Age, TicketID };
+    const { id, Name, Age } = visiter;
+    return { id, Name, Age };
   }
 }
 

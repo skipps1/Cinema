@@ -1,4 +1,4 @@
-const Cinema = require('./Cinema.model');
+import Cinema from './Cinema.model';
 
 const Cinemas = [new Cinema()];
 

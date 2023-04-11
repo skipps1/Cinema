@@ -8,11 +8,12 @@ class Ticket {
     this.Film_name = Film_name;
     this.Adress = Adress;
     this.Duration = Duration;
+    this.Vname = Vname;
   }
 
   static toResponse(ticket) {
-    const { id, Seat, Hall, Film_name, Adress, Duration} = ticket;
-    return { id, Seat, Hall, Film_name, Adress, Duration };
+    const { id, Seat, Hall, Film_name, Duration, Vname} = ticket;
+    return { id, Seat, Hall, Film_name, Duration, Vname};
   }
 }
 
