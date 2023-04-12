@@ -22,6 +22,32 @@ const deleteById = async (id) => {
   Tickets.splice(TicketPosition, 1);
   return TicketDeletable;
 };
+const deleteByAdress = async (Adress) => {
+  const TicketPosition = Tickets.findIndex((ticket) => ticket.Adress === Adress);
+
+  if (TicketPosition === -1) return null;
+
+  const TicketDeletable = Tickets[TicketPosition];
+
+  Tickets.splice(TicketPosition, 1);
+  return TicketDeletable;
+};
+
+const removeVisiterByName = async (Name) => {
+  const visterTickets = Tickets.filter((ticket) => ticket.Vname === Name);
+
+  await Promise.allSettled(
+    visterTickets.map(async (ticket) => updateById({ id: ticket.id, Vname: null }))
+  );
+};
+
+const removeCinemaByAdress = async (Adress) => {
+  const cinemaTickets = Tickets.filter((ticket) => ticket.Adress === Adress);
+
+  await Promise.allSettled(
+    cinemaTickets.map(async (ticket) => updateByAdress(Adress))
+  );
+};
 
 const updateById = async ({ id, Seat, Hall, Film_name, Duration }) => {
   const TicketPosition = Tickets.findIndex((ticket) => ticket.id === id);
@@ -35,11 +61,13 @@ const updateById = async ({ id, Seat, Hall, Film_name, Duration }) => {
   return newTicket;
 };
 
-module.exports = {
+export{
   Tickets,
   getAll,
   getById,
   createTicket,
   deleteById,
   updateById,
+  removeVisiterByName,
+  removeCinemaByAdress
 };
