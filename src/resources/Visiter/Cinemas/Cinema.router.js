@@ -1,5 +1,5 @@
 import { Router } from 'express';
-
+import catchErrors from '../../../common/catchErrors.js';
 import Cinema from './Cinema.service.js';
 import * as cinemaService from './Cinema.service.js';
 
@@ -29,7 +29,7 @@ router.route('/').post(
   })
 );
 
-router.route('*связка*').get(
+router.route('/:id').get(
   catchErrors(async (req, res) => {
     const { ID } = req.params;
 
@@ -45,12 +45,12 @@ router.route('*связка*').get(
   })
 );
 
-router.route('*связка*').put(
+router.route('/:id').put(
   catchErrors(async (req, res) => {
     const { ID } = req.params;
-    const { id, Adress, Num_of_Halls } = req.body;
+    const { Adress, Num_of_Halls } = req.body;
 
-    const cinema = await cinemaService.updateById({ ID, id, Adress, Num_of_Halls });
+    const cinema = await cinemaService.updateById({ ID, Adress, Num_of_Halls });
 
     if (cinema) {
       res.status(StatusCodes.OK).json(Cinema.toResponse(cinema));
@@ -62,9 +62,9 @@ router.route('*связка*').put(
   })
 );
 
-router.route('*связка*').delete(
+router.route('/:id').delete(
   catchErrors(async (req, res) => {
-    const { ID } = req.params;
+    const { id } = req.params;
 
     const cinema = await cinemaService.deleteById(id);
 

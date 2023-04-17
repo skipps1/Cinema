@@ -22,7 +22,7 @@ const deleteById = async (id) => {
   Tickets.splice(TicketPosition, 1);
   return TicketDeletable;
 };
-const deleteByAdress = async (Adress) => {
+const removeCinemaByAdress = async (Adress) => {
   const TicketPosition = Tickets.findIndex((ticket) => ticket.Adress === Adress);
 
   if (TicketPosition === -1) return null;
@@ -38,14 +38,6 @@ const removeVisiterByName = async (Name) => {
 
   await Promise.allSettled(
     visterTickets.map(async (ticket) => updateById({ id: ticket.id, Vname: null }))
-  );
-};
-
-const removeCinemaByAdress = async (Adress) => {
-  const cinemaTickets = Tickets.filter((ticket) => ticket.Adress === Adress);
-
-  await Promise.allSettled(
-    cinemaTickets.map(async (ticket) => updateByAdress(Adress))
   );
 };
 

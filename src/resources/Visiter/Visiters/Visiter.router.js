@@ -6,7 +6,6 @@ import * as visitersService from './Visiter.service.js';
 const router = Router();
 
 
-
 router.route('/').get(
   catchErrors(async (req, res) => {
     const visiters = await visitersService.getAll();
@@ -59,7 +58,7 @@ router.route('/:id').put(
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
-        .json({ code: 'BOARD_NOT_FOUND', msg: 'Board not found' });
+        .json({ code: 'VISITER_NOT_FOUND', msg: 'Visiter not found' });
     }
   })
 );
