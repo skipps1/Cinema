@@ -1,5 +1,6 @@
+import StatusCodes from 'http-status-codes';
 import { Router } from 'express';
-import catchErrors from '../../../common/catchErrors.js';
+import catchErrors from '../../common/catchErrors.js';
 import Ticket from './Ticket.service.js';
 import * as ticketService from './Ticket.service.js';
 
@@ -15,9 +16,9 @@ router.route('/').get(
 
 router.route('/').post(
   catchErrors(async (req, res) => {
-    const { id, Seat, Hall, Film_name, Duration, Vname } = req.body;
+    const { id, seat, hall, filmName, duration, visiterID } = req.body;
 
-    const ticket = await ticketService.createUser({ id, Seat, Hall, Film_name, Duration, Vname });
+    const ticket = await ticketService.createUser({ id, seat, hall, filmName, duration, visiterID });
 
     if (ticket) {
       res.status(StatusCodes.CREATED).json(Ticket.toResponse(ticket));
@@ -31,7 +32,7 @@ router.route('/').post(
 
 router.route('/:id').get(
   catchErrors(async (req, res) => {
-    const { ID } = req.params;
+    const { id } = req.params;
 
     const ticket = await ticketService.getById(id);
 
@@ -47,10 +48,10 @@ router.route('/:id').get(
 
 router.route('/:id').put(
   catchErrors(async (req, res) => {
-    const { ID, Adress } = req.params;
-    const { Seat, Hall, Film_name, Duration, Vname } = req.body;
+    const { id, adress } = req.params;
+    const { seat, hall, filmName, duration, visiterID } = req.body;
 
-    const ticket = await ticketService.updateById({ ID, Seat, Hall, Film_name, Adress, Duration, Vname });
+    const ticket = await ticketService.updateById({ id, seat, hall, filmName, adress, duration, visiterID });
 
     if (ticket) {
       res.status(StatusCodes.OK).json(Ticket.toResponse(ticket));

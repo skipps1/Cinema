@@ -1,6 +1,7 @@
+import StatusCodes from 'http-status-codes';
 import { Router } from 'express';
-import catchErrors from '../../../common/catchErrors.js';
-import Visiter from './Visiter.memory.repository.js';
+import catchErrors from '../../common/catchErrors.js';
+import Visiter from './Visiter.model.js';
 import * as visitersService from './Visiter.service.js';
 
 const router = Router();
@@ -16,9 +17,9 @@ router.route('/').get(
 
 router.route('/').post(
   catchErrors(async (req, res) => {
-    const { id, Name, Age } = req.body;
+    const { id, name, age } = req.body;
 
-    const visiter = await visitersService.createVisiter({ id, Name, Age });
+    const visiter = await visitersService.createVisiter({ id, name, age });
 
     if (visiter) {
       res.status(StatusCodes.CREATED).json(Visiter.toResponse(visiter));
@@ -49,12 +50,12 @@ router.route('/:id').get(
 router.route('/:id').put(
   catchErrors(async (req, res) => {
     const { id } = req.params;
-    const { title, columns } = req.body;
+    const { name, age } = req.body;
 
-    const board = await boardsService.updateById({ id, title, columns });
+    const visiter = await visitersService.updateById({ id, name, age });
 
-    if (board) {
-      res.status(StatusCodes.OK).json(Board.toResponse(board));
+    if (visiter) {
+      res.status(StatusCodes.OK).json(visiter.toResponse(visiter));
     } else {
       res
         .status(StatusCodes.NOT_FOUND)

@@ -1,4 +1,4 @@
-import Visiter from './Visiter.model';
+import Visiter from './Visiter.model.js';
 
 const Visiters = [new Visiter()];
 
@@ -6,8 +6,8 @@ const getAll = async () => Visiters;
 
 const getById = async (id) => Visiters.find((visiter) => visiter.id === id);
 
-const createVisiter = async ({ id, Name, Age }) => {
-  const visiter = new Visiter({ id, Name, Age });
+const createVisiter = async ({ id, name, age }) => {
+  const visiter = new Visiter({ id, name, age });
   Visiters.push(visiter);
   return visiter;
 };
@@ -23,13 +23,13 @@ const deleteById = async (id) => {
   return VisiterDeletable;
 };
 
-const updateById = async ({ id, Name, Age }) => {
+const updateById = async ({ id, name, age }) => {
   const VisiterPosition = Visiters.findIndex((visiter) => visiter.id === id);
 
   if (VisiterPosition === -1) return null;
 
   const oldVisiter = Visiters[VisiterPosition];
-  const newVisiter = { ...oldVisiter, Name, Age }; // убрать TicketID
+  const newVisiter = { ...oldVisiter, name, age }; // убрать TicketID
 
   Visiters.splice(VisiterPosition, 1, newVisiter);
   return newVisiter;
@@ -42,5 +42,4 @@ export {
   createVisiter,
   deleteById,
   updateById,
-  removeTicketById
 };

@@ -1,5 +1,6 @@
+import StatusCodes from 'http-status-codes';
 import { Router } from 'express';
-import catchErrors from '../../../common/catchErrors.js';
+import catchErrors from '../../common/catchErrors.js';
 import Cinema from './Cinema.service.js';
 import * as cinemaService from './Cinema.service.js';
 
@@ -15,9 +16,9 @@ router.route('/').get(
 
 router.route('/').post(
   catchErrors(async (req, res) => {
-    const { id, Adress, Num_Of_Halls } = req.body;
+    const { id, adress, numberOfHalls } = req.body;
 
-    const cinema = await cinemaService.createUser({ id, Adress, Num_Of_Halls });
+    const cinema = await cinemaService.createUser({ id, adress, numberOfHalls });
 
     if (cinema) {
       res.status(StatusCodes.CREATED).json(Cinema.toResponse(cinema));
@@ -31,7 +32,7 @@ router.route('/').post(
 
 router.route('/:id').get(
   catchErrors(async (req, res) => {
-    const { ID } = req.params;
+    const { id } = req.params;
 
     const cinema = await cinemaService.getById(id);
 
@@ -47,10 +48,10 @@ router.route('/:id').get(
 
 router.route('/:id').put(
   catchErrors(async (req, res) => {
-    const { ID } = req.params;
-    const { Adress, Num_of_Halls } = req.body;
+    const { id } = req.params;
+    const { adress, numberOfHalls } = req.body;
 
-    const cinema = await cinemaService.updateById({ ID, Adress, Num_of_Halls });
+    const cinema = await cinemaService.updateById({ id, adress, numberOfHalls });
 
     if (cinema) {
       res.status(StatusCodes.OK).json(Cinema.toResponse(cinema));

@@ -1,13 +1,13 @@
-import Cinema from './Cinema.model';
+import Cinema from './Cinema.model.js';
 
 const Cinemas = [new Cinema()];
 
 const getAll = async () => Cinemas;
   
-const getById = async (id) => Cinemas.find((Cinema) => Cinema.id === id);
+const getById = async (id) => Cinemas.find((cinema) => cinema.id === id);
 
-const createCinema = async ({ id, Adress, Num_of_halls }) => {
-  const cinema = new Cinema({ id, Adress, Num_of_halls });
+const createCinema = async ({ id, adress, numberOfHalls }) => {
+  const cinema = new Cinema({ id, adress, numberOfHalls });
   Cinemas.push(cinema);
   return cinema;
 };
@@ -23,19 +23,19 @@ const deleteById = async (id) => {
   return CinemaDeletable;
 };
 
-const updateById = async ({ id, Adress, Num_of_halls }) => {
+const updateById = async ({ id, adress, numberOfHalls }) => {
   const CinemaPosition = Cinemas.findIndex((cinema) => cinema.id === id);
 
   if (CinemaPosition === -1) return null;
 
   const oldCinema = Cinemas[CinemaPosition];
-  const newCinema = { ...oldCinema, Adress, Num_of_halls };
+  const newCinema = { ...oldCinema, adress, numberOfHalls };
 
   Cinemas.splice(CinemaPosition, 1, newCinema);
   return newCinema;
 };
 
-module.exports = {
+export{
   Cinemas,
   getAll,
   getById,
@@ -44,4 +44,3 @@ module.exports = {
   updateById,
 };
 
-export { getAll };
