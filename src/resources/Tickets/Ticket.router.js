@@ -1,13 +1,13 @@
 import StatusCodes from 'http-status-codes';
 import { Router } from 'express';
 import catchErrors from '../../common/catchErrors.js';
-import Ticket from './Ticket.service.js';
+import Ticket from './Ticket.model.js';
 import * as ticketService from './Ticket.service.js';
 
 const router = Router();
 
 router.route('/').get(
-  catchErrors(async (req, res) => {
+  catchErrors(async (_req, res) => {
     const ticket = await ticketService.getAll();
 
     res.json(ticket.map(Ticket.toResponse));
@@ -18,7 +18,7 @@ router.route('/').post(
   catchErrors(async (req, res) => {
     const { id, seat, hall, filmName, duration, visiterID } = req.body;
 
-    const ticket = await ticketService.createUser({ id, seat, hall, filmName, duration, visiterID });
+    const ticket = await ticketService.createTicket({ id, seat, hall, filmName, duration, visiterID });
 
     if (ticket) {
       res.status(StatusCodes.CREATED).json(Ticket.toResponse(ticket));

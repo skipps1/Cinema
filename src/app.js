@@ -1,6 +1,8 @@
 import express from 'express';
 
-import router from './resources/Visiters/Visiter.router.js';
+import visiterRouter from './resources/Visiters/Visiter.router.js';
+import cinemaRouter from './resources/Cinemas/Cinema.router.js';
+import ticketRouter from './resources/Tickets/Ticket.router.js'
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.use('/', (req, res, next) => {
   next();
 });
 
-app.use('/Visiters', router);
+app.use('/Visiters', visiterRouter);
+app.use('/Cinemas', cinemaRouter);
+app.use('/Tickets', ticketRouter);
 
 export default app;

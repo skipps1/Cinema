@@ -23,7 +23,7 @@ const deleteById = async (id) => {
   return TicketDeletable;
 };
 const removeCinemaByID = async (id) => {
-  const TicketPosition = Tickets.findIndex((ticket) => ticket.id === id);
+  const TicketPosition = Tickets.findIndex((ticket) => ticket.cinemaID === id);
 
   if (TicketPosition === -1) return null;
 

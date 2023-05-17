@@ -1,7 +1,7 @@
 import StatusCodes from 'http-status-codes';
 import { Router } from 'express';
 import catchErrors from '../../common/catchErrors.js';
-import Cinema from './Cinema.service.js';
+import Cinema from './Cinema.model.js';
 import * as cinemaService from './Cinema.service.js';
 
 const router = Router();
@@ -18,7 +18,7 @@ router.route('/').post(
   catchErrors(async (req, res) => {
     const { id, adress, numberOfHalls } = req.body;
 
-    const cinema = await cinemaService.createUser({ id, adress, numberOfHalls });
+    const cinema = await cinemaService.createCinema({ id, adress, numberOfHalls });
 
     if (cinema) {
       res.status(StatusCodes.CREATED).json(Cinema.toResponse(cinema));

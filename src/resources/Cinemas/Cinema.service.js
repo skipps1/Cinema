@@ -15,4 +15,4 @@ const deleteById = async (id) => {
 const updateById = ({ id, adress, numberOfHalls }) =>
   cinemasRepo.updateById({ id, adress, numberOfHalls });
 
-module.exports = { getAll, getById, createCinema, deleteById, updateById };
+export { getAll, getById, createCinema, deleteById, updateById };
