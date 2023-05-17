@@ -1,6 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
+import { TTicketModel, TTicketResponse } from './Ticket.type';
 
 class Ticket {
+  id:string;
+  seat:number;
+  hall:number;
+  filmName:string;
+  cinemaID:string;
+  duration:number;
+  visiterID:string | undefined;
+
   constructor({ id = uuidv4(), seat = 1, hall = 2, filmName = 'SHREK', cinemaID = uuidv4(), duration = 120, visiterID = uuidv4() } = {}) {
     this.id = id;
     this.seat = seat;
@@ -11,9 +20,9 @@ class Ticket {
     this.visiterID = visiterID;
   }
 
-  static toResponse(ticket) {
-    const { id, seat, hall, filmName, duration, visiterID} = ticket;
-    return { id, seat, hall, filmName, duration, visiterID};
+  static toResponse(ticket: TTicketModel) : TTicketResponse {
+    const { id, seat, hall, filmName, duration, cinemaID, visiterID} = ticket;
+    return { id, seat, hall, filmName, duration, cinemaID, visiterID};
   }
 }
 
