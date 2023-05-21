@@ -13,7 +13,7 @@ class Visiter {
     this.age = age;
   }
 
-  static toResponse(visiter: TVisiterModel) : TVisiterResponse {
+  static toResponse(visiter)  {
     const { id, name, age } = visiter;
     return { id, name, age };
   }

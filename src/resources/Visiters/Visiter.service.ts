@@ -2,7 +2,7 @@ import { TVisiterModel } from './Visiter.type';
 import * as visitersRepo from './Visiter.memory.repository';
 import * as ticketsRepo from '../Tickets/Ticket.memory.repository';
 
-const getAll = (): Promise<(TVisiterModel | undefined)[]> => visitersRepo.getAll();
+const getAll = (): Promise<(TVisiterModel )[]> => visitersRepo.getAll();
 
 const getById = (id: string): Promise<(TVisiterModel | undefined)> => visitersRepo.getById(id);
 

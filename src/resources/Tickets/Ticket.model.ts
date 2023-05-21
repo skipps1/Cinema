@@ -8,7 +8,7 @@ class Ticket {
   filmName:string;
   cinemaID:string;
   duration:number;
-  visiterID:string | undefined;
+  visiterID:string;
 
   constructor({ id = uuidv4(), seat = 1, hall = 2, filmName = 'SHREK', cinemaID = uuidv4(), duration = 120, visiterID = uuidv4() } = {}) {
     this.id = id;
@@ -20,7 +20,7 @@ class Ticket {
     this.visiterID = visiterID;
   }
 
-  static toResponse(ticket: TTicketModel) : TTicketResponse {
+  static toResponse(ticket) : TTicketResponse {
     const { id, seat, hall, filmName, duration, cinemaID, visiterID} = ticket;
     return { id, seat, hall, filmName, duration, cinemaID, visiterID};
   }

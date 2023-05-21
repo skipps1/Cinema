@@ -1,13 +1,14 @@
 import StatusCodes from 'http-status-codes';
-import { Router } from 'express';
-import catchErrors from '../../common/catchErrors.js';
-import Cinema from './Cinema.model.js';
-import * as cinemaService from './Cinema.service.js';
+import { Request, Response, Router } from 'express';
+import catchErrors from '../../common/catchErrors';
+import Cinema from './Cinema.model';
+import { TCinemaModel } from './Cinema.type';
+import * as cinemaService from './Cinema.service';
 
 const router = Router();
 
 router.route('/').get(
-  catchErrors(async (req, res) => {
+  catchErrors(async (_req: Request, res: Response) => {
     const cinema = await cinemaService.getAll();
 
     res.json(cinema.map(Cinema.toResponse));
@@ -15,8 +16,8 @@ router.route('/').get(
 );
 
 router.route('/').post(
-  catchErrors(async (req, res) => {
-    const { id, adress, numberOfHalls } = req.body;
+  catchErrors(async (req: Request, res: Response) => {
+    const { id, adress, numberOfHalls }:TCinemaModel = req.body;
 
     const cinema = await cinemaService.createCinema({ id, adress, numberOfHalls });
 
@@ -31,10 +32,10 @@ router.route('/').post(
 );
 
 router.route('/:id').get(
-  catchErrors(async (req, res) => {
+  catchErrors(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const cinema = await cinemaService.getById(id);
+    const cinema = await cinemaService.getById(id || '');
 
     if (cinema) {
       res.json(Cinema.toResponse(cinema));
@@ -47,11 +48,11 @@ router.route('/:id').get(
 );
 
 router.route('/:id').put(
-  catchErrors(async (req, res) => {
+  catchErrors(async (req: Request, res: Response) => {
     const { id } = req.params;
     const { adress, numberOfHalls } = req.body;
 
-    const cinema = await cinemaService.updateById({ id, adress, numberOfHalls });
+    const cinema = await cinemaService.updateById({ id: id || '', adress, numberOfHalls });
 
     if (cinema) {
       res.status(StatusCodes.OK).json(Cinema.toResponse(cinema));
@@ -64,10 +65,10 @@ router.route('/:id').put(
 );
 
 router.route('/:id').delete(
-  catchErrors(async (req, res) => {
+  catchErrors(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const cinema = await cinemaService.deleteById(id);
+    const cinema = await cinemaService.deleteById(id || '');
 
     if (!cinema) {
       return res

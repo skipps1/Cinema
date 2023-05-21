@@ -50,7 +50,7 @@ const removeVisiterByID = async (id:string) => {
   const visterTickets = Tickets.filter((ticket) => ticket?.visiterID === id);
 
   await Promise.allSettled(
-    visterTickets.map(async (ticket) => updateById({ id: ticket.id, seat: ticket.seat, hall:ticket.hall, filmName:ticket.filmName, duration:ticket.duration, cinemaID:ticket.cinemaID, visiterID: undefined }))
+    visterTickets.map(async (ticket) => updateById({ id: ticket.id, seat: ticket.seat, hall:ticket.hall, filmName:ticket.filmName, duration:ticket.duration, cinemaID:ticket.cinemaID, visiterID:ticket.visiterID }))
   );
 };
 

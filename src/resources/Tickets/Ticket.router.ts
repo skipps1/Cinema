@@ -1,13 +1,14 @@
 import StatusCodes from 'http-status-codes';
-import { Router } from 'express';
-import catchErrors from '../../common/catchErrors.js';
-import Ticket from './Ticket.model.js';
-import * as ticketService from './Ticket.service.js';
+import { Router, Response, Request} from 'express';
+import catchErrors from '../../common/catchErrors';
+import Ticket from './Ticket.model';
+import { TTicketModel } from './Ticket.type';
+import * as ticketService from './Ticket.service';
 
 const router = Router();
 
 router.route('/').get(
-  catchErrors(async (_req, res) => {
+  catchErrors(async (_req: Request, res: Response) => {
     const ticket = await ticketService.getAll();
 
     res.json(ticket.map(Ticket.toResponse));
@@ -15,10 +16,10 @@ router.route('/').get(
 );
 
 router.route('/').post(
-  catchErrors(async (req, res) => {
-    const { id, seat, hall, filmName, duration, visiterID } = req.body;
+  catchErrors(async (req: Request, res: Response) => {
+    // const { id, seat, hall, filmName, duration, visiterID }:TTicketModel = req.body;
 
-    const ticket = await ticketService.createTicket({ id, seat, hall, filmName, duration, visiterID });
+    const ticket = await ticketService.createTicket(/*{ id, seat, hall, filmName, duration, cinemaID, visiterID }*/req.body);
 
     if (ticket) {
       res.status(StatusCodes.CREATED).json(Ticket.toResponse(ticket));
@@ -31,10 +32,10 @@ router.route('/').post(
 );
 
 router.route('/:id').get(
-  catchErrors(async (req, res) => {
+  catchErrors(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const ticket = await ticketService.getById(id);
+    const ticket = await ticketService.getById(id || '');
 
     if (ticket) {
       res.json(Ticket.toResponse(ticket));
@@ -47,11 +48,11 @@ router.route('/:id').get(
 );
 
 router.route('/:id').put(
-  catchErrors(async (req, res) => {
-    const { id, adress } = req.params;
-    const { seat, hall, filmName, duration, visiterID } = req.body;
+  catchErrors(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { seat, hall, filmName, duration, cinemaID, visiterID } = req.body;
 
-    const ticket = await ticketService.updateById({ id, seat, hall, filmName, adress, duration, visiterID });
+    const ticket = await ticketService.updateById({ id: id||'', seat, hall, filmName, duration, cinemaID, visiterID });
 
     if (ticket) {
       res.status(StatusCodes.OK).json(Ticket.toResponse(ticket));
@@ -64,10 +65,10 @@ router.route('/:id').put(
 );
 
 router.route('/:id').delete(
-  catchErrors(async (req, res) => {
+  catchErrors(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const ticket = await ticketService.deleteById(id);
+    const ticket = await ticketService.deleteById(id || '');
 
     if (!ticket) {
       return res

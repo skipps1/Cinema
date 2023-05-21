@@ -1,9 +1,9 @@
 import Visiter from './Visiter.model';
 import { TVisiterModel } from './Visiter.type';
 
-const Visiters: (TVisiterModel | undefined)[]  = [new Visiter()];
+const Visiters: (TVisiterModel )[]  = [new Visiter()];
 
-const getAll = async (): Promise<(TVisiterModel | undefined)[]> => Visiters;
+const getAll = async (): Promise<(TVisiterModel )[]> => Visiters;
 
 const getById = async (id:string): Promise<(TVisiterModel | undefined)> => Visiters.find((visiter) => id === visiter?.id);
 

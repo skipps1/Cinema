@@ -4,7 +4,7 @@ export interface TTicket {
     filmName:string;
     cinemaID:string;
     duration:number;
-    visiterID:string | undefined;
+    visiterID:string;
 }
 
 export interface TTicketModel extends TTicket {
